@@ -315,7 +315,7 @@ public class MainLayout extends AppCompatActivity {
 
         if (!isFile) {
           // The request is hierarchical, source is still on a directory level
-          File dstDir = new File(dstBase);
+          File dstDir = new File(dst);
           //noinspection ResultOfMethodCallIgnored
           dstDir.mkdir();
           if (!dstDir.isDirectory()) {
