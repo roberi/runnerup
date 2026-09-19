@@ -16,12 +16,17 @@ android {
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            resources.srcDirs = ['src']
-            aidl.srcDirs = ['src']
+            java.srcDirs = ['src/main']
+            resources.srcDirs = ['src/main'] // TODO: Safe to remove?
+            aidl.srcDirs = ['src/main']
             // renderscript.srcDirs = ['src']
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
+            if (rootProject.ext.enableWear) {
+                java.srcDirs += ['src/wear']
+            } else {
+                java.srcDirs += ['src/nonwear']
+            }
         }
     }
     lint {
@@ -52,13 +57,6 @@ android {
         aidl = true
         buildConfig = true
     }
-
-    flavorDimensions = [ "all" ]
-    productFlavors {
-        latest {
-            dimension = "all"
-        }
-    }
 }
 
 repositories {
@@ -72,7 +70,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:${rootProject.ext.appcompat_version}"
     implementation "androidx.preference:preference:${rootProject.ext.preference_version}"
     if (rootProject.ext.enableWear) {
-        latestImplementation "com.google.android.gms:play-services-wearable:${rootProject.ext.googlePlayServicesWearableVersion}"
+        implementation "com.google.android.gms:play-services-wearable:${rootProject.ext.googlePlayServicesWearableVersion}"
     }
 
     if (rootProject.ext.antPlusLibName) {
